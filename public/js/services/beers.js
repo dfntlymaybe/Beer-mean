@@ -49,13 +49,19 @@ app.factory('beers', ['$http', function ($http) {
       });
   };
 
+  beerService.findById = function(id){
+    for(beer in beerService.beers){
+      if(id == beerService.beers[beer]._id){
+        return beerService.beers[beer];
+      }
+    }
+     
+  }
 
 
   //Ask for the Beers from the server(DB)
   beerService.getAll = function () {
     return $http.get('/beers').success(function (data) {
-      console.log(data)
-
       angular.copy(data, beerService.beers);
     });
   };
@@ -63,11 +69,10 @@ app.factory('beers', ['$http', function ($http) {
   //Send create new Beer request to srver
   beerService.create = function (beer) {
     
-    return $http.post('/beers', beer).success(function (data) {
+    $http.post('/beers', beer).success(function (data) {
      
       var temp ={};
       angular.copy(data, temp);
-
       beerService.beers.push(temp);
     });
   };
@@ -78,7 +83,7 @@ app.factory('beers', ['$http', function ($http) {
     var temp = {};
     angular.copy(beer, temp);
     beer.rating.push(rating);
-    return $http.put('/beers', beer).success(function (data) {
+    $http.put('/beers', beer).success(function (data) {
 
       beerService.beers[beerService.beer.indexOf(temp)] = beer;
 
@@ -97,6 +102,39 @@ app.factory('beers', ['$http', function ($http) {
   
   };
 
+  beerService.deleteComment = function(beer, comment){
+
+    //delete the comment from the DB
+    $http.delete('/beers/' + beer._id +'/reviews/' + comment._id).success( function(data) {
+
+    //delete the comment from the array
+    var beerIndex = beerService.beers.indexOf(beer);
+    var commentIndex = beerService.beers[beerIndex].reviews.indexOf(comment);
+    beerService.beers[beerIndex].reviews.splice(commentIndex, 1);
+
+    });
+  };
+
+  beerService.saveComment = function(beer, comment){
+    $http.post('/beers/' + beer._id + '/reviews', comment).success(function (data) {
+
+      var temp ={};
+      angular.copy(data, temp);
+      beerService.beers[beerService.beers.indexOf(beer)].reviews.push(temp);
+      console.log(temp);
+     //console.log(beerService.beers);
+      // var temp ={};
+      // angular.copy(data, temp);
+
+      // beerService.beers.push(temp);
+    });
+  }
+
+  // beerService.login = function(credentials){
+  //   $http.post('/login', credentials).success(function (data) {
+      
+  //   }
+  // }
    // for(beer in beersArray){
    //  beerService.create(beersArray[beer]);
    // }

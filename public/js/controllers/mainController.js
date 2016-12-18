@@ -1,6 +1,8 @@
 
   app.controller('MainCtrl', ['$scope','beers', function($scope, beers){
 
+    $scope.commentData = {};
+
     var clearForm = function(){
       $scope.name = "";
       $scope.style = "";
@@ -50,7 +52,6 @@
     };
 
     $scope.deleteBeer = function(beer){
-      console.log(beer._id);
       beers.delete(beer);
     }
 
@@ -62,6 +63,12 @@
     $scope.sortRating = function(){
       beers.sortByRating();
     };
+
+    // $scope.login = function(username, passWord){
+    //   var credentials = {name: username, pass: passWord}
+    //   beers.login(credentials);
+    // }
+
 
     }]);
 

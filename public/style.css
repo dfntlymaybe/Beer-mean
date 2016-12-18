@@ -6,7 +6,7 @@
   color: red;
 }
 
-.glyphicon-floppy-remove{
+.glyphicon-floppy-remove, a{
   cursor: pointer;
 }
 
@@ -32,4 +32,8 @@ ul{
 
 .bold{
   font-weight: bold;
+}
+
+.rate-btn{
+  margin-bottom: 5px;
 }

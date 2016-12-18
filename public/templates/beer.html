@@ -1,0 +1,43 @@
+  <div class="page-header">
+    <a href="/#/home">back</a>
+    <h3><span>{{beer.name}}</span></h3>
+  </div>
+  <div class="col-md-4">
+    <p><span class="bold">Average Rating: {{calcAvr(beer)}}</span></p>
+    <p>Totla Votes: {{beer.rating.length}}</p>
+    <p>Rate it NOW:</p>
+     <select ng-options="item as item.label for item in exsRateOptions track by item.id" ng-model="exsSelected"></select>
+    <button type="submit" class="btn btn-warning rate-btn" ng-click="rateExsBeer(beer, exsSelected)">Rate</button>
+  </div>
+
+  <div class="col-md-4">
+    <p><span class="bold">Style:</span> {{beer.style}}</p>
+    <p><span class="bold">Abv:</span> {{beer.abv}}%</p>
+    <p></p>
+  </div>
+
+  <div class="col-md-4">
+    <img ng-src="{{beer.img_url}}" class="img-thumbnail"/>
+  </div>
+
+  <div class="col-md-12">
+    <div class="comments-section">
+      <h4>Comments:</h4>
+      <div ng-repeat="comment in beer.reviews">
+        <span class="bold">{{comment.userName}}:</span> {{comment.text}} <a    ng-click="removeComment(beer, comment)">remove</a>
+      </div>                  
+      
+      <form class="form-inline" ng-submit="postComment(beer)">
+
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="User Name" ng-model="userName">
+          </div>
+
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Comment..." ng-model="comment">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Add New Comment</button>
+
+    </div>
+  </div>

@@ -1,0 +1,112 @@
+  
+  
+  <div class="col-md-6" >
+    <a class="btn btn-info" ng-click="sortRating()">Sort By Rating</a>
+    <div class="row beer-item" ng-repeat="beer in beerList">
+      <span class="glyphicon glyphicon-floppy-remove pull-right" ng-click="deleteBeer(beer)"></span>
+      <h2><a class="beer-name" ui-sref="beer({id: beer._id})">{{beer.name}}</a></h2>
+
+        <div class="col-md-4">
+          <p><span class="bold">Average Rating: {{calcAvr(beer)}}</span></p>
+          <p>Totla Votes: {{beer.rating.length}}</p>
+          <!-- <p>Rate it NOW:</p>
+          <select ng-options="item as item.label for item in exsRateOptions track by item.id" ng-model="exsSelected"></select>
+          <button type="submit" class="btn btn-warning rate-btn" ng-click="rateExsBeer(beer, exsSelected)">Rate</button> -->
+        </div>
+
+        <div class="col-md-4">
+          <p><span class="bold">Style:</span> {{beer.style}}</p>
+          <p><span class="bold">Abv:</span> {{beer.abv}}%</p>
+          <p></p>
+        </div>
+
+        <div class="col-md-4">
+          <img ng-src="{{beer.img_url}}" class="img-thumbnail"/>
+        </div>
+    </div>
+  </div>
+              <!-- <div class="col-md-12">
+                <div class="comments-section">
+                  <div ng-repeat="comment in beer.reviews">
+                    {{comment}}
+                  </div>                  
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="type new comment..." ng-model="commentData.commentInput">
+                    <span class="input-group-btn">
+                      <button class="btn btn-secondary" ng-click="postComment(beer)" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div> -->
+
+
+
+
+  <div class="col-md-6">
+    
+    <form ng-submit="addBeer()">
+      <h3>Add a new beer</h3>
+
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Beer Name" ng-model="name">
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Style" ng-model="style">
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="ABV" ng-model="abv">
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Image URL" ng-model="image">
+        </div>
+
+        <button type="submit" class="btn btn-primary pull-right">Add</button>
+        Rating:
+        <select ng-options="item as item.label for item in newRateOptions track by item.id" ng-model="newSelected"></select>
+                                                                      
+    </form>
+  </div>
+
+
+
+
+
+      <!-- <div ng-repeat="beer in beers">
+        <div class="beer">
+          <div class="img-container">
+            <img ng-src={{beer.image_url}}/>
+          </div>
+
+          <div class="content-container">
+            <a class="beer-name" ui-sref="beer({id: beer._id})">{{beer.name}}</a>
+            <p>{{beer.style}} - {{beer.abv}}% ABV</p>
+          </div>
+
+          <i ng-click="removeBeer(beer)" class="fa fa-times remove"></i>
+        </div>
+      </div>
+
+      <form ng-submit="addBeer()">
+        <h3>Add a new beer</h3>
+
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Beer Name" ng-model="name"></input>
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Style" ng-model="style"></input>
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="ABV" ng-model="abv"></input>
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Image URL" ng-model="image_url"></input>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add</button>
+      </form> -->
