@@ -9,7 +9,7 @@ var passport = require('passport');
 var expressSession = require('express-session');
 var LocalStrategy = require('passport-local').Strategy;
 
-mongoose.connect('mongodb://localhost/beers');
+mongoose.connect(process.env.MONGOLAB_OLIVE_URI || 'mongodb://localhost/beers');
 
 //import mongoose DB models
 var Beer = require("./models/BeerModel");
@@ -226,4 +226,4 @@ app.get('/logout', function (req, res) {
 
 
 
-app.listen(8000);
+app.listen(process.env.PORT || '4000');
