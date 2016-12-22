@@ -1,17 +1,47 @@
   
-  
-  <div class="col-md-6" >
+  <div class="col-md-6 col-md-offset-3 page-header" ng-show="isLoggedIn">
+    
+    <form ng-submit="addBeer()">
+      <h3>Add a new beer</h3>
+
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Beer Name" ng-model="name">
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Style" ng-model="style">
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="ABV" ng-model="abv">
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Image URL" ng-model="image">
+        </div>
+
+        <button type="submit" class="btn btn-primary pull-right">Add</button>
+        Rating:
+        <select ng-options="item as item.label for item in newRateOptions track by item.id" ng-model="newSelected"></select>
+                                                                      
+    </form>
+  </div>
+
+
+  <div class="col-md-6 col-md-offset-3" >
     <a class="btn btn-info" ng-click="sortRating()">Sort By Rating</a>
     <div class="row beer-item" ng-repeat="beer in beerList">
-      <span class="glyphicon glyphicon-floppy-remove pull-right" ng-click="deleteBeer(beer)"></span>
+      <span class="glyphicon glyphicon-floppy-remove pull-right" ng-click="deleteBeer(beer)" ng-show="isLoggedIn"></span>
       <h2><a class="beer-name" ui-sref="beer({id: beer._id})">{{beer.name}}</a></h2>
 
         <div class="col-md-4">
           <p><span class="bold">Average Rating: {{calcAvr(beer)}}</span></p>
           <p>Totla Votes: {{beer.rating.length}}</p>
-          <!-- <p>Rate it NOW:</p>
-          <select ng-options="item as item.label for item in exsRateOptions track by item.id" ng-model="exsSelected"></select>
-          <button type="submit" class="btn btn-warning rate-btn" ng-click="rateExsBeer(beer, exsSelected)">Rate</button> -->
+          <div ng-show="isLoggedIn">
+            <p >Rate it NOW:</p>
+            <select ng-options="item as item.label for item in exsRateOptions track by item.id" ng-model="exsSelected"></select>
+            <button type="submit" class="btn btn-warning rate-btn" ng-click="rateExsBeer(beer, exsSelected)">Rate</button>
+          </div>
         </div>
 
         <div class="col-md-4">
@@ -42,33 +72,7 @@
 
 
 
-  <div class="col-md-6">
-    
-    <form ng-submit="addBeer()">
-      <h3>Add a new beer</h3>
-
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Beer Name" ng-model="name">
-        </div>
-
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Style" ng-model="style">
-        </div>
-
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="ABV" ng-model="abv">
-        </div>
-
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Image URL" ng-model="image">
-        </div>
-
-        <button type="submit" class="btn btn-primary pull-right">Add</button>
-        Rating:
-        <select ng-options="item as item.label for item in newRateOptions track by item.id" ng-model="newSelected"></select>
-                                                                      
-    </form>
-  </div>
+  
 
 
 

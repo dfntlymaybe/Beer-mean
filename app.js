@@ -32,11 +32,22 @@ app.use(bodyParser.json());   // This is the type of body we're interested in
 app.use(bodyParser.urlencoded({extended: false}));
 
 
+//We want to send the client only username and id
 passport.serializeUser(function (user, done) {
+  user = {
+    username: user.username,
+    _id: user._id
+  };
+
   done(null, user);
 });
 
 passport.deserializeUser(function (user, done) {
+  user = {
+    username: user.username,
+    _id: user._id
+  };
+
   done(null, user);
 });
 
@@ -140,6 +151,7 @@ app.delete('/beers/:beerId/reviews/:commentId', function (req, res, next) {
   });
 });
 
+//register new user
 passport.use('register', new LocalStrategy(function (username, password, done) {
   User.findOne({ 'username': username }, function (err, user) {
     // In case of any error return
@@ -160,7 +172,7 @@ passport.use('register', new LocalStrategy(function (username, password, done) {
       // set the user's local credentials
       newUser.username = username;
       newUser.password = password;    // Note: Should create a hash out of this plain password!
-
+      console.log(newUser.username + ' ' + newUser.password);
       // save the user
       newUser.save(function (err) {
         if (err) {
@@ -180,28 +192,38 @@ app.post('/register', passport.authenticate('register'), function (req, res) {
   res.json(req.user);
 });
 
+//Authenticate middleware for login
+passport.use('login', new LocalStrategy(function (username, password, done) {
+  User.findOne({ 'username': username, 'password': password }, function (err, user) {
+    if (err) {
+      return done(err); 
+    }
+
+    if (!user) { 
+      return done(null, false); 
+    }
+
+    return done(null, user);
+  });
+}));
+
+//listen to /login post requests
+app.post('/login', passport.authenticate('login'), function (req, res) {
+  console.log("login requested " + req.body);
+  res.json(req.user);
+});
+
 app.get('/currentUser', function (req, res) {
   res.send(req.user);
 });
 
+//listen to /logout get request
+app.get('/logout', function (req, res) {
+  req.logout();
+  res.redirect('/');
+});
 
-// //Authenticate middleware for login
-// passport.use('login', new LocalStrategy(function (username, password, done) {
-//   var authenticated = username === "John" && password === "Smith";
-  
-//   if (authenticated) {
-//     return done(null, { myUser:'user', myID: 1234 });
-//   } else {
-//     return done(null, false);       
-//   }
-// }));
 
-// //listen to /login post requests
-// app.post('/login', passport.authenticate('login', {
-//   successRedirect: '/success',
-//   failureRedirect: '/login'
-  
-// }));
 
 
 app.listen(8000);

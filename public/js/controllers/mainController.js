@@ -1,7 +1,21 @@
 
-  app.controller('MainCtrl', ['$scope','beers', function($scope, beers){
+  app.controller('MainCtrl', ['$scope','beers','auth',  function($scope, beers, auth){
 
     $scope.commentData = {};
+
+    $scope.isLoggedIn = false;
+
+    auth.getCurrentUser();
+
+    $scope.$on('currentUserChange', function() {
+      $scope.currentUser = auth.currentUser;
+      if($scope.currentUser != null){
+        $scope.isLoggedIn = true;
+      }else{
+        $scope.isLoggedIn = false;
+      }
+      
+    });
 
     var clearForm = function(){
       $scope.name = "";
@@ -64,11 +78,6 @@
       beers.sortByRating();
     };
 
-    // $scope.login = function(username, passWord){
-    //   var credentials = {name: username, pass: passWord}
-    //   beers.login(credentials);
-    // }
 
-
-    }]);
+  }]);
 

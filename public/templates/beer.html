@@ -5,9 +5,11 @@
   <div class="col-md-4">
     <p><span class="bold">Average Rating: {{calcAvr(beer)}}</span></p>
     <p>Totla Votes: {{beer.rating.length}}</p>
-    <p>Rate it NOW:</p>
-     <select ng-options="item as item.label for item in exsRateOptions track by item.id" ng-model="exsSelected"></select>
-    <button type="submit" class="btn btn-warning rate-btn" ng-click="rateExsBeer(beer, exsSelected)">Rate</button>
+    <div ng-show="isLoggedIn">
+      <p>Rate it NOW:</p>
+       <select ng-options="item as item.label for item in exsRateOptions track by item.id" ng-model="exsSelected"></select>
+      <button type="submit" class="btn btn-warning rate-btn" ng-click="rateExsBeer(beer, exsSelected)">Rate</button>
+    </div>
   </div>
 
   <div class="col-md-4">
@@ -24,10 +26,10 @@
     <div class="comments-section">
       <h4>Comments:</h4>
       <div ng-repeat="comment in beer.reviews">
-        <span class="bold">{{comment.userName}}:</span> {{comment.text}} <a    ng-click="removeComment(beer, comment)">remove</a>
+        <span class="bold">{{comment.userName}}:</span> {{comment.text}} <a ng-show="isLoggedIn" ng-click="removeComment(beer, comment)">remove</a>
       </div>                  
       
-      <form class="form-inline" ng-submit="postComment(beer)">
+      <form class="form-inline" ng-submit="postComment(beer)" ng-show="isLoggedIn">
 
           <div class="form-group">
             <input type="text" class="form-control" placeholder="User Name" ng-model="userName">
