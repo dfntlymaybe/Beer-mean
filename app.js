@@ -9,7 +9,9 @@ var passport = require('passport');
 var expressSession = require('express-session');
 var LocalStrategy = require('passport-local').Strategy;
 
-mongoose.connect(process.env.MONGOLAB_OLIVE_URI || 'mongodb://localhost/beers');
+// mongoose.connect(process.env.MONGOLAB_OLIVE_URI || 'mongodb://localhost/beers');
+mongoose.connect('mongodb://localhost/beers');
+
 
 //import mongoose DB models
 var Beer = require("./models/BeerModel");
@@ -53,7 +55,7 @@ passport.deserializeUser(function (user, done) {
 
 
 
-app.set('view engine', 'ejs');
+// app.set('view engine', 'ejs');
 
 
 
@@ -226,4 +228,5 @@ app.get('/logout', function (req, res) {
 
 
 
-app.listen(process.env.PORT || '4000');
+// app.listen(process.env.PORT || '4000');
+app.listen(4000);
